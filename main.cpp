@@ -3,10 +3,11 @@ using namespace std;
 
 class BigInt {
 public:
-	BigInt & operator =(const BigInt &intA){
-		if(this!=&intA){
+	
+	BigInt & operator =(const int &intA){
+		//if(this!=&intA){
 			return *this;
-		}
+		//}
 	};
 };
 
