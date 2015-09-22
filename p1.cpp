@@ -25,7 +25,7 @@ public:
         BigInt& operator=(const BigInt &intA); 
 }
 
-BigInt& operator=(const BigInt &myInt){
+BigInt operator=(const BigInt &myInt){
         
 	return *this;
 }
