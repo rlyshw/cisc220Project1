@@ -3,14 +3,26 @@ using namespace std;
 
 class BigInt {
 public:
-	
-	BigInt & operator =(const int &intA){
-		//if(this!=&intA){
-			return *this;
-		//}
-	};
+    int val;
+	BigInt(int i);
+	friend BigInt operator+(const BigInt &intA, const BigInt& intB);
+	//BigInt & operator =(const int &rhs);
+
 };
+/*BigInt&  BigInt::operator =(const int &rhs){
+	return *this;
+}*/
+
+BigInt::BigInt(int i){
+	this->val=i;
+}
+
+BigInt operator+(const BigInt& intA, const BigInt& intB){
+    
+}
 
 int main(){
-	BigInt myInt = 270;
+	BigInt* intA = new BigInt(2000000000);
+	BigInt* intB = new BigInt(2000000000);
+	//cout << intA+intB << endl;
 }
