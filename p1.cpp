@@ -1,5 +1,6 @@
 #include <iostream>
 #include <bitset>
+#include"p1.h"
 using namespace std;
 
 /*Decide how to get data into an instance of your class.
@@ -9,11 +10,21 @@ using namespace std;
     *Give an indication of your performance at various sizes.
     */
     
-class bigInt {
+class BigInt {
         /* We could use the power of tens and vectors to get the values 
         *  so if the user input 321 it would be 1*1 2*10 3*100
         */
         
         // vector<dataType> identifier(numElements);
         //vector<bigInt> input(numElements);
+public:
+        friend BigInt operator+(const BigInt &intA, const BigInt &intB);
+        friend BigInt operator-(const BigInt &intA, const BigInt &intB);
+        friend BigInt operator*(const BigInt &intA, const BigInt &intB);
+        friend BigInt operator/(const BigInt &intA, const BigInt &intB);
+        friend BigInt operator=(const BigInt &intA); 
+}
+
+BigInt operator=(const BigInt &myInt){
+        return *this;
 }
