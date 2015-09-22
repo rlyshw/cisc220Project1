@@ -3,12 +3,13 @@ using namespace std;
 
 class BigInt {
 public:
-	BigInt operator=(const BigInt &intA);
-}
-BigInt operator=(const BigInt &myInt){
-	return *this;
-}
+	BigInt & operator =(const BigInt &intA){
+		if(this!=&intA){
+			return *this;
+		}
+	};
+};
 
 int main(){
-	BigInt myInt = 2700000000000;
+	BigInt myInt = 270;
 }
