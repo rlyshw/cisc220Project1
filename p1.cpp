@@ -18,14 +18,13 @@ class BigInt {
         // vector<dataType> identifier(numElements);
         //vector<bigInt> input(numElements);
 public:
-        BigInt operator+(const BigInt &intA, const BigInt &intB);
-        BigInt operator-(const BigInt &intA, const BigInt &intB);
-        BigInt operator*(const BigInt &intA, const BigInt &intB);
-        BigInt operator/(const BigInt &intA, const BigInt &intB);
+        //BigInt operator+(const BigInt &intA, const BigInt &intB);
+        //BigInt operator-(const BigInt &intA, const BigInt &intB);
+        //BigInt operator*(const BigInt &intA, const BigInt &intB);
+        //BigInt operator/(const BigInt &intA, const BigInt &intB);
         BigInt& operator=(const BigInt &intA); 
 }
 
 BigInt operator=(const BigInt &myInt){
-        
 	return *this;
 }
