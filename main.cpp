@@ -31,7 +31,6 @@ int main(){
 	//BigInt n = 987654321;
 	//BigInt m = 123456789;
 	//n = m;
-	BigInt m = BigInt(10);
 	BigInt l = 123458919;
 	cout << l.val << endl;
 	//BigInt* intA = new BigInt(2000000000);
