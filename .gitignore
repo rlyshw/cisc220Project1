@@ -4,6 +4,9 @@
 *.o
 *.obj
 
+# Vim temp files
+*.swp
+
 # Precompiled Headers
 *.gch
 *.pch
