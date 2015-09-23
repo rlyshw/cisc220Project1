@@ -3,17 +3,8 @@
 using namespace std;
 
 BigInt::BigInt(int i){
-	// we need a constructor it makes it a scalar type
+	// here is where we need to build the infinitely big number
 	this->val=i;
-}
-
-template<class T>
-BigInt& BigInt::operator =(const T &rhs){
-	// This is the place where we initialize the value.
-	// Think of it as the entry point of our class.
-	// This is where we have to scaffold out the datastructure
-	return *this;
-	this->val = &rhs;
 }
 
 BigInt BigInt::operator+(const BigInt& a){
@@ -34,5 +25,6 @@ BigInt BigInt::operator-(const BigInt& a){
 }
 
 BigInt BigInt::operator/(const BigInt& a){
+	if(this->val%a.val!=0)
 	return this->val/a.val;
 }

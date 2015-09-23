@@ -8,10 +8,12 @@ using namespace std;
 //}
 
 int main(){
+	BigInt big = 12345678987654321;
 	BigInt l = 10;
 	BigInt i = 20;
 	cout << (l+i).val << endl;
 	cout << (l*i).val << endl;
 	cout << (l-i).val << endl;
 	cout << (i/l).val  << endl;
+	cout << big.val << endl;
 }
