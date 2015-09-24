@@ -2,31 +2,34 @@
 #include<sstream>
 #include"BigInt.h"
 #include<bitset>
+#include<typeinfo>
 using namespace std;
 
 BigInt::BigInt(int i){
-	this->arr = new int[10];
+	//Creates a 10*1 array that stores each individual digit of the input integer
+	this->arr = new int[11]; // int array has to be one larger than our max desired digits
 	int iterator = 0;
-	for(int j = 10; j <= i*10; j *= 10){
-		cout << (i%j)/(j/10) << endl;
-		
+	long long casti = (long long)i;
+	//Loops through each digit of the integer and populates the array
+	for(long long j = 10; j <= casti*10; j *= 10){
+		arr[iterator] = (i%j)/(j/10);
 		iterator++;
 	}
-	//BigInt test = new BigInt[];
-	//cout << (i%100)/10 << endl;
-	// I don't foresee any issues here.
-	// We can only bring in int-sized numbers.
 	this->val=i;
-	// BigInt test = new BigInt[];
 }
 
 BigInt BigInt::operator+(const BigInt& a){
-	// Below is an example of overloaded addition.
-	// if we do i+j, this->"whatever" refers to i,
-	// a is the second value, j
-	// you should be able to see how we could use the 
-	// specific instances data structures to do mathy stuff
-	return this->val+a.val;
+	int sizeThis=0;
+	for(;this->arr[sizeThis]!='\0';++sizeThis);
+	
+	int sizeA=0;
+	for(;a.arr[sizeA]!='\0';++sizeA);
+	BigInt newInt = 10;
+	cout << newInt<<endl;
+	for(int i=0;i<((sizeA-sizeThis>0) ? sizeA : sizeThis);i++){
+		
+	}
+	return newInt;
 }
 
 BigInt BigInt::operator*(const BigInt& a){
@@ -49,6 +52,13 @@ BigInt BigInt::operator/(const BigInt& a){
 }
 
 ostream& operator<<(ostream &out, const BigInt& a){
-	out << a.val;
+	int size=0;
+	for(;a.arr[size]!='\0';++size){
+		cout << a.arr[size] << endl;
+	};
+	size--;
+	for(;size>=0;size--){
+		out << a.arr[size];
+	}
 	return out;
 }
