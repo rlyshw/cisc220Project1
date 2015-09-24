@@ -28,7 +28,7 @@ BigInt BigInt::operator+(const BigInt& a){
 	for(;a.arr[sizeA]!=20;++sizeA);
 	//cout << sizeA << endl;
 	BigInt newInt = 10;
-	int length = ((sizeA-sizeThis>0)?sizeA:sizeThis);
+	int length = ((sizeA-sizeThis>0)?sizeA:sizeThis)+1;
 	newInt.arr = new int[((length<10)?11:length+1)];
 	//cout << ((sizeA-sizeThis>0)?sizeA:sizeThis)+1 << endl;
 	int i= 0;
@@ -37,33 +37,37 @@ BigInt BigInt::operator+(const BigInt& a){
 		//cout << this->arr[i] << '+' << a.arr[i] << " ";
 		if((a.arr[i]+this->arr[i])>=10){
 			if(a.arr[i+1]==20)a.arr[i+1]=0;
-			//cout << a.arr[i] << endl;
 			a.arr[i+1]++;
 			newInt.arr[i]=(a.arr[i]+this->arr[i])%10;
 			continue;
 		};
 		newInt.arr[i] = this->arr[i]+a.arr[i];
 	}
-	cout << newInt.arr[i]<<endl;
-	newInt.arr[i]=20;
+	if(!newInt.arr[i-1]){
+		newInt.arr[i-1]=20;
+	}else{
+		newInt.arr[i]=20;
+	}
 	return newInt;
 }
 
 BigInt BigInt::operator*(const BigInt& a){
-	/*BigInt newInt = 10;
-	sumArr = new int[10] ;
+	/*
+	//Needs some unit testing and unsure of the syntax. In this code, how should the 
+	//operand that isn't the big int parameter be represented?
+	
+	BigInt newInt = 10;
+	sumArr = new int[10];
 	int aSize = sizeof(a)/sizeof(*a);
 	for(int i = 0; i < aSize; i++){
 		sumArr[i] = (a.arr[i]*newInt.arr[i])*(pow(10, i));
 	}
-	bool addToVal = false;
+	
 	for(int i = 1; i < (sizeof(sumArr)/sizeof(*sumArr)); i++){
 		a.arr[i] = sumArr[i]%10;
-		if(sumArr[i]%(pow(10, i+1)) > 9 && addToVal == false){
+		if(sumArr[i]%(pow(10, i+1)) > 9){
 			a.arr[i+1] = sumArr[i]/10;
-		}
-		else if(sumArr[i]%(pow(10, i+1)) > 9 && addToVal == true){
-			a.arr[i+1] += sumArr[i]/10;
+			addToVal = true;
 		}
 	}*/
 	return this->val*a.val;
