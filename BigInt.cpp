@@ -1,9 +1,11 @@
 #include<iostream>
+#include<sstream>
 #include"BigInt.h"
 using namespace std;
 
 BigInt::BigInt(int i){
-	// here is where we need to build the infinitely big number
+	// I don't foresee any issues here.
+	// We can only bring in int-sized numbers.
 	this->val=i;
 }
 
@@ -27,4 +29,9 @@ BigInt BigInt::operator-(const BigInt& a){
 BigInt BigInt::operator/(const BigInt& a){
 	if(this->val%a.val!=0)
 	return this->val/a.val;
+}
+
+ostream& operator<<(ostream &out, const BigInt& a){
+	out << a.val;
+	return out;
 }
