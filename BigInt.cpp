@@ -21,45 +21,62 @@ BigInt::BigInt(int i){
 }
 
 BigInt BigInt::operator+(const BigInt& a){
+	
+	// these two loops get the size of each operand array(ie num of digits)
 	int sizeThis=0;
 	for(;this->arr[sizeThis]!=20;++sizeThis);
-	
 	int sizeA=0;
 	for(;a.arr[sizeA]!=20;++sizeA);
-	//cout << sizeA << endl;
+	
+	// we instantiate a dummy value for our output, we will overwrite this later
 	BigInt newInt = 10;
+	// length is the size of our final array
 	int length = ((sizeA-sizeThis>0)?sizeA:sizeThis)+1;
+	// we use a ternary operator to keep the array atleast 11 digits long
 	newInt.arr = new int[((length<10)?11:length+1)];
-	//cout << ((sizeA-sizeThis>0)?sizeA:sizeThis)+1 << endl;
+	
+	// we need the iterator after the loop exits
 	int i= 0;
+	// this for loop is going to do digit-by-digit arithemetic with carry
 	for(;i<length;i++){
-		//if(a.arr[i]==20)a.arr[i]=0;
-		//cout << this->arr[i] << '+' << a.arr[i] << "=";
-		cout << ((a.arr[i]>=20?a.arr[i]%20:a.arr[i]))<<"+"<<
-				((this->arr[i]>=20?this->arr[i]%20:this->arr[i])) <<"="<<
-				((a.arr[i]>=20?a.arr[i]%20:a.arr[i])+(this->arr[i]>=20?this->arr[i]%20:this->arr[i]))%10 << " ";
-		if(((a.arr[i]>=20?a.arr[i]%20:a.arr[i])+(this->arr[i]>=20?this->arr[i]%20:this->arr[i]))>=10){
-			newInt.arr[i+1]++;// this is breaking the original value;
-		};
-		newInt.arr[i] += ((a.arr[i]>=20?a.arr[i]%20:a.arr[i])+(this->arr[i]>=20?this->arr[i]%20:this->arr[i]))%10;
-		if(newInt.arr[i]>=10){
+		// this sum line looks like a lot, lets break it down
+		// it's really just a.arr[i]+this->arr[i], the ternary operator
+		// just makes sure we aren't trying to add in the array terminator(20)
+		int sum = ((a.arr[i]>=20?a.arr[i]%20:a.arr[i])+(this->arr[i]>=20?this->arr[i]%20:this->arr[i]));
+		
+		if(sum>=10){
+			// carry out
 			newInt.arr[i+1]++;
+		};
+		
+		// no matter if we carried or not, make this value the first digit of the sum
+		newInt.arr[i] += sum%10;
+		
+		// this stops a 10 from entering our digit array
+		// if we are at a ten,
+		if(newInt.arr[i]>=10){
+			// carry it out
+			newInt.arr[i+1]++;
+			// and set it back to the ones digit
 			newInt.arr[i] = newInt.arr[i]%10;
 		}
-		cout << newInt.arr[i] << endl; 
 	}
+	
+	// this conditional takes care of leading zeros
+	// we can get leading zeros if the most significant digit didn't carry out
 	if(!newInt.arr[i-1]){
+		//change leading zero to terminator
 		newInt.arr[i-1]=20;
 	}else{
+		//otherwise put terminator at the logical end of the digit array
 		newInt.arr[i]=20;
 	}
-	cout << endl;
+	// return the final value
 	return newInt;
 }
 
 BigInt BigInt::operator*(const BigInt& a){
-	
-	/*=
+	/*
 	//Needs some unit testing and unsure of the syntax. In this code, how should the 
 	//operand that isn't the big int parameter be represented?
 	

@@ -12,7 +12,7 @@ int main(){
 	//BigInt l = 10;
 	//BigInt i = 20;
 	//BigInt two = 1234567891;
-	//cout << two << endl;
+	//cout << two << endl;13086791879324657913
 	BigInt a = 123456789;
 	BigInt b = 10;
 	cout << a+a+a+a << endl;
