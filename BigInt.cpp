@@ -15,31 +15,39 @@ BigInt::BigInt(int i){
 		arr[iterator] = (i%j)/(j/10);
 		iterator++;
 	}
-	arr[iterator] = 10;
+	arr[iterator] = 20;
 	this->val=i;
 }
 
 BigInt BigInt::operator+(const BigInt& a){
 	int sizeThis=0;
-	for(;this->arr[sizeThis]!=10;++sizeThis);
+	for(;this->arr[sizeThis]!=20;++sizeThis);
 	
 	int sizeA=0;
-	for(;a.arr[sizeA]!=10;++sizeA);
+	for(;a.arr[sizeA]!=20;++sizeA);
+	cout << sizeA << endl;
 	BigInt newInt = 10;
-	newInt.arr = new int[((sizeA-sizeThis>0)?sizeA:sizeThis)+1];
-	cout << ((sizeA-sizeThis>0)?sizeA:sizeThis)+1 << endl;
-	//cout << newInt <<endl;
-	//for(int i=0;i<((sizeA-sizeThis>0) ? sizeA : sizeThis);i++){
-		
-	//}
+	int length = (((sizeA-sizeThis>0)?sizeA:sizeThis)+1)<=10?11:sizeA+1;
+	//cout << length << endl;
+	newInt.arr = new int[length];
+	//cout << ((sizeA-sizeThis>0)?sizeA:sizeThis)+1 << endl;
+	int i= 0;
+	for(;i<length;i++){
+		cout << this->arr[i] << '+' << a.arr[i] << " ";
+		newInt.arr[i] = this->arr[i]+a.arr[i];
+	}
+	newInt.arr[i]=20;
 	return newInt;
 }
 
 BigInt BigInt::operator*(const BigInt& a){
+	BigInt newInt = 10;
+	
 	return this->val*a.val;
 }
 
 BigInt BigInt::operator-(const BigInt& a){
+	
 	return this->val-a.val;
 }
 
@@ -56,7 +64,8 @@ BigInt BigInt::operator/(const BigInt& a){
 
 ostream& operator<<(ostream &out, const BigInt& a){
 	int size=0;
-	for(;a.arr[size]!=10;++size);
+	for(;a.arr[size]!=20;++size);
+	//cout << size << endl;
 	//cout << size << endl;
 	size--;
 	for(;size>=0;size--){
