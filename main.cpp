@@ -13,9 +13,9 @@ int main(){
 	//BigInt i = 20;
 	//BigInt two = 1234567891;
 	//cout << two << endl;
-	BigInt three = 100;
-	BigInt four = three+three;
-	cout << three+three << endl;
+	BigInt a = 123456789;
+	BigInt b = 10;
+	cout << a+a+a+a << endl;
 	//cout << four << endl;
 	//cout << (l+i) << endl;
 	//cout << (l*i) << endl;

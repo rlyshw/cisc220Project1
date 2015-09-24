@@ -33,20 +33,27 @@ BigInt BigInt::operator+(const BigInt& a){
 	//cout << ((sizeA-sizeThis>0)?sizeA:sizeThis)+1 << endl;
 	int i= 0;
 	for(;i<length;i++){
-		if(a.arr[i]==20)a.arr[i]=0;
-		//cout << this->arr[i] << '+' << a.arr[i] << " ";
-		if((a.arr[i]+this->arr[i])>=10){
-			a.arr[i+1]++;// this is breaking the original value;
-			newInt.arr[i]=(a.arr[i]+this->arr[i])%10;
-			continue;
+		//if(a.arr[i]==20)a.arr[i]=0;
+		//cout << this->arr[i] << '+' << a.arr[i] << "=";
+		cout << ((a.arr[i]>=20?a.arr[i]%20:a.arr[i]))<<"+"<<
+				((this->arr[i]>=20?this->arr[i]%20:this->arr[i])) <<"="<<
+				((a.arr[i]>=20?a.arr[i]%20:a.arr[i])+(this->arr[i]>=20?this->arr[i]%20:this->arr[i]))%10 << " ";
+		if(((a.arr[i]>=20?a.arr[i]%20:a.arr[i])+(this->arr[i]>=20?this->arr[i]%20:this->arr[i]))>=10){
+			newInt.arr[i+1]++;// this is breaking the original value;
 		};
-		newInt.arr[i] = this->arr[i]+(a.arr[i]>20?a.arr[i]%20:a.arr[i]);
+		newInt.arr[i] += ((a.arr[i]>=20?a.arr[i]%20:a.arr[i])+(this->arr[i]>=20?this->arr[i]%20:this->arr[i]))%10;
+		if(newInt.arr[i]>=10){
+			newInt.arr[i+1]++;
+			newInt.arr[i] = newInt.arr[i]%10;
+		}
+		cout << newInt.arr[i] << endl; 
 	}
 	if(!newInt.arr[i-1]){
 		newInt.arr[i-1]=20;
 	}else{
 		newInt.arr[i]=20;
 	}
+	cout << endl;
 	return newInt;
 }
 
