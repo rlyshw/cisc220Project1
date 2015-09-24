@@ -36,12 +36,11 @@ BigInt BigInt::operator+(const BigInt& a){
 		if(a.arr[i]==20)a.arr[i]=0;
 		//cout << this->arr[i] << '+' << a.arr[i] << " ";
 		if((a.arr[i]+this->arr[i])>=10){
-			if(a.arr[i+1]==20)a.arr[i+1]=0;
-			a.arr[i+1]++;
+			a.arr[i+1]++;// this is breaking the original value;
 			newInt.arr[i]=(a.arr[i]+this->arr[i])%10;
 			continue;
 		};
-		newInt.arr[i] = this->arr[i]+a.arr[i];
+		newInt.arr[i] = this->arr[i]+(a.arr[i]>20?a.arr[i]%20:a.arr[i]);
 	}
 	if(!newInt.arr[i-1]){
 		newInt.arr[i-1]=20;
@@ -52,15 +51,23 @@ BigInt BigInt::operator+(const BigInt& a){
 }
 
 BigInt BigInt::operator*(const BigInt& a){
-	/*
+	
+	/*=
 	//Needs some unit testing and unsure of the syntax. In this code, how should the 
 	//operand that isn't the big int parameter be represented?
 	
 	BigInt newInt = 10;
 	sumArr = new int[10];
+	bool addToVal = false;
+	
 	int aSize = sizeof(a)/sizeof(*a);
 	for(int i = 0; i < aSize; i++){
-		sumArr[i] = (a.arr[i]*newInt.arr[i])*(pow(10, i));
+		if(addToVal == true){
+			sumArr[i] += (a.arr[i]*newInt.arr[i])*(pow(10, i));
+		}
+		else if(addToVal == false){
+			sumArr[i] = (a.arr[i]*newInt.arr[i])*(pow(10, i));
+		}
 	}
 	
 	for(int i = 1; i < (sizeof(sumArr)/sizeof(*sumArr)); i++){
