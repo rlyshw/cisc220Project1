@@ -1,5 +1,6 @@
 #include<iostream>
 #include<sstream>
+#include<math.h>
 #include"BigInt.h"
 #include<bitset>
 #include<typeinfo>
@@ -25,24 +26,46 @@ BigInt BigInt::operator+(const BigInt& a){
 	
 	int sizeA=0;
 	for(;a.arr[sizeA]!=20;++sizeA);
-	cout << sizeA << endl;
+	//cout << sizeA << endl;
 	BigInt newInt = 10;
-	int length = (((sizeA-sizeThis>0)?sizeA:sizeThis)+1)<=10?11:sizeA+1;
-	//cout << length << endl;
-	newInt.arr = new int[length];
+	int length = ((sizeA-sizeThis>0)?sizeA:sizeThis);
+	newInt.arr = new int[((length<10)?11:length+1)];
 	//cout << ((sizeA-sizeThis>0)?sizeA:sizeThis)+1 << endl;
 	int i= 0;
 	for(;i<length;i++){
-		cout << this->arr[i] << '+' << a.arr[i] << " ";
+		if(a.arr[i]==20)a.arr[i]=0;
+		//cout << this->arr[i] << '+' << a.arr[i] << " ";
+		if((a.arr[i]+this->arr[i])>=10){
+			if(a.arr[i+1]==20)a.arr[i+1]=0;
+			//cout << a.arr[i] << endl;
+			a.arr[i+1]++;
+			newInt.arr[i]=(a.arr[i]+this->arr[i])%10;
+			continue;
+		};
 		newInt.arr[i] = this->arr[i]+a.arr[i];
 	}
+	cout << newInt.arr[i]<<endl;
 	newInt.arr[i]=20;
 	return newInt;
 }
 
 BigInt BigInt::operator*(const BigInt& a){
-	BigInt newInt = 10;
-	
+	/*BigInt newInt = 10;
+	sumArr = new int[10] ;
+	int aSize = sizeof(a)/sizeof(*a);
+	for(int i = 0; i < aSize; i++){
+		sumArr[i] = (a.arr[i]*newInt.arr[i])*(pow(10, i));
+	}
+	bool addToVal = false;
+	for(int i = 1; i < (sizeof(sumArr)/sizeof(*sumArr)); i++){
+		a.arr[i] = sumArr[i]%10;
+		if(sumArr[i]%(pow(10, i+1)) > 9 && addToVal == false){
+			a.arr[i+1] = sumArr[i]/10;
+		}
+		else if(sumArr[i]%(pow(10, i+1)) > 9 && addToVal == true){
+			a.arr[i+1] += sumArr[i]/10;
+		}
+	}*/
 	return this->val*a.val;
 }
 
@@ -64,9 +87,8 @@ BigInt BigInt::operator/(const BigInt& a){
 
 ostream& operator<<(ostream &out, const BigInt& a){
 	int size=0;
-	for(;a.arr[size]!=20;++size);
-	//cout << size << endl;
-	//cout << size << endl;
+	for(;a.arr[size]!=20;++size){
+	};
 	size--;
 	for(;size>=0;size--){
 		out << a.arr[size];
