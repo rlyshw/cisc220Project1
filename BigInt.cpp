@@ -1,12 +1,23 @@
 #include<iostream>
 #include<sstream>
 #include"BigInt.h"
+#include<bitset>
 using namespace std;
 
 BigInt::BigInt(int i){
+	this->arr = new int[10];
+	int iterator = 0;
+	for(int j = 10; j <= i*10; j *= 10){
+		cout << (i%j)/(j/10) << endl;
+		
+		iterator++;
+	}
+	//BigInt test = new BigInt[];
+	//cout << (i%100)/10 << endl;
 	// I don't foresee any issues here.
 	// We can only bring in int-sized numbers.
 	this->val=i;
+	// BigInt test = new BigInt[];
 }
 
 BigInt BigInt::operator+(const BigInt& a){
@@ -27,8 +38,14 @@ BigInt BigInt::operator-(const BigInt& a){
 }
 
 BigInt BigInt::operator/(const BigInt& a){
-	if(this->val%a.val!=0)
-	return this->val/a.val;
+	/*if(this->val%a.val!=0){
+		this->(double)val/a.val;
+	}
+	else{
+		this->val/a.val;
+	}
+	*/
+	return this->val;
 }
 
 ostream& operator<<(ostream &out, const BigInt& a){
