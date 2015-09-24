@@ -2,8 +2,6 @@
 #include<sstream>
 #include<math.h>
 #include"BigInt.h"
-#include<bitset>
-#include<typeinfo>
 using namespace std;
 
 BigInt::BigInt(int i){
@@ -23,7 +21,7 @@ BigInt::BigInt(int i){
 BigInt BigInt::operator+(const BigInt& a){
 	
 	// these two loops get the size of each operand array(ie num of digits)
-	int sizeThis=0;
+	int sizeThis=0;//sidenote: these are of type int, we are limited to nums with 2bil digits
 	for(;this->arr[sizeThis]!=20;++sizeThis);
 	int sizeA=0;
 	for(;a.arr[sizeA]!=20;++sizeA);
@@ -76,6 +74,15 @@ BigInt BigInt::operator+(const BigInt& a){
 }
 
 BigInt BigInt::operator*(const BigInt& a){
+	BigInt out = 0;
+	int size = 0;
+	for(;a.arr[size]!=20;++size);
+	for(int i=0;i<size;i++){
+		for(int j=0;j<(a.arr[i]*pow(10,i));j++){
+			out = out+*this;
+		}
+	}
+	return out;
 	/*
 	//Needs some unit testing and unsure of the syntax. In this code, how should the 
 	//operand that isn't the big int parameter be represented?
@@ -101,7 +108,6 @@ BigInt BigInt::operator*(const BigInt& a){
 			addToVal = true;
 		}
 	}*/
-	return this->val*a.val;
 }
 
 BigInt BigInt::operator-(const BigInt& a){
