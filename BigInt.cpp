@@ -15,20 +15,23 @@ BigInt::BigInt(int i){
 		arr[iterator] = (i%j)/(j/10);
 		iterator++;
 	}
+	arr[iterator] = 10;
 	this->val=i;
 }
 
 BigInt BigInt::operator+(const BigInt& a){
 	int sizeThis=0;
-	for(;this->arr[sizeThis]!='\0';++sizeThis);
+	for(;this->arr[sizeThis]!=10;++sizeThis);
 	
 	int sizeA=0;
-	for(;a.arr[sizeA]!='\0';++sizeA);
+	for(;a.arr[sizeA]!=10;++sizeA);
 	BigInt newInt = 10;
-	cout << newInt<<endl;
-	for(int i=0;i<((sizeA-sizeThis>0) ? sizeA : sizeThis);i++){
+	newInt.arr = new int[((sizeA-sizeThis>0)?sizeA:sizeThis)+1];
+	cout << ((sizeA-sizeThis>0)?sizeA:sizeThis)+1 << endl;
+	//cout << newInt <<endl;
+	//for(int i=0;i<((sizeA-sizeThis>0) ? sizeA : sizeThis);i++){
 		
-	}
+	//}
 	return newInt;
 }
 
@@ -53,9 +56,8 @@ BigInt BigInt::operator/(const BigInt& a){
 
 ostream& operator<<(ostream &out, const BigInt& a){
 	int size=0;
-	for(;a.arr[size]!='\0';++size){
-		cout << a.arr[size] << endl;
-	};
+	for(;a.arr[size]!=10;++size);
+	//cout << size << endl;
 	size--;
 	for(;size>=0;size--){
 		out << a.arr[size];
