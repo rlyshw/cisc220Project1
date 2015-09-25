@@ -1,33 +1,93 @@
 #include<iostream>
+#include<string>
 #include"BigInt.h"
 using namespace std;
 
-/* Performance at various sizes:
-Our program works for any "BigInts" to be added together that are put into the system from cin but when
-directly constructing a BigInt it cannot be anything bigger than the maximum int's value. 
-Addition performs at all sizes, within the real time of .01 seconds found by using time ./a.out
-Subtraction performs at all sizes, within the same real time as addtion but you cannot subract a bigger number
-Multiplication of BigInts is preformed accurately up to the 100 million place.
-Division of BigInts does not work as a quotinet cannot be computed by each number in its value.
-*/
 
 int main(){
-	//BigInt big = 3;
-	//BigInt l = 10;
-	//BigInt i = 20;
-	//BigInt two = 1234567891;
-	//cout << two << endl;13086791879324657913
-	BigInt a = 12345678;
-	BigInt b = 1000000;
-	cout << a/b<< endl;
-	//cout << four << endl;
-	//cout << (l+i) << endl;
-	//cout << (l*i) << endl;
-	//cout << (l-i) << endl;
-	//cout << (i/l)  << endl;
-	//cout << big << endl;
-
-   BigInt a = "123456789123456789";
-   cout << a*a << endl;
+    BigInt A = 0;
+    BigInt B = 0;
+    
+    cout << "Enter a number for A: " << endl;
+    cin >> A;
+    cout << "Enter a number for B: " << endl;
+    cin >> B;
+    
+    cout << "A + B = " << A + B << endl;
+    cout << "A - B = " << A - B << endl;
+    cout << "A * B = " << A * B << endl;
+    cout << "A/B = " << A/B << endl;
+    
+    /*
+    //Unit Testing code for each overloaded arithmetic operator
+    BigInt a = 100;
+    BigInt b = 1983728574;
+    BigInt c = 394857;
+    BigInt d = 89273;
+    BigInt e = 225;
+    BigInt f = 45;
+    BigInt g = 8;
+    BigInt result = 0;
+    
+    string resultVal = "";
+    string test1 = "1983333717";
+    string test2 = "1983728674";
+    string test3 = "20086425";
+    string test4 = "5";
+    
+    cout << "Test 1: subtraction" << endl;
+    result = b - c;
+    for(int i = 0; result.arr[i] != 20; i++){
+        resultVal.push_back(result.arr[i]);
+    }
+    if(resultVal == test1){
+        cout << "Test 1 passed" << endl;
+    }
+    else{
+        cout << "ERROR: Test 1 failed." << endl;
+    }
+    
+    cout << "Test 2: addition" << endl;
+    result = a + b;
+    for(int i = 0; result.arr[i] != 20; i++){
+        resultVal.push_back(result.arr[i]);
+    }
+    if(resultVal == test2){
+        cout << "Test 2 passed" << endl;
+    }
+    else{
+        cout << "ERROR: Test 2 failed." << endl;
+    }
+    
+    cout << "Test 3: multiplication" << endl;
+    result = d*e;
+    for(int i = 0; result.arr[i] != 20; i++){
+        resultVal.push_back(result.arr[i]);
+    }
+    if(resultVal == test3){
+        cout << "Test 3 passed" << endl;
+    }
+    else{
+        cout << "ERROR: Test 3 failed." << endl;
+    }
+    
+    cout << "Test 4: division" << endl;
+    result = e/f;
+    for(int i = 0; result.arr[i] != 20; i++){
+        resultVal.push_back(result.arr[i]);
+    }
+    if(resultVal == test4){
+        cout << "Test 4 passed" << endl;
+    }
+    else{
+        cout << "ERROR: Test 4 failed." << endl;
+    }
+    
+    
+    cout << "End of Tests." << endl;
+    */
+    
 }
+
+
 
