@@ -15,8 +15,19 @@ BigInt::BigInt(int i){
 		iterator++;
 	}
 	arr[iterator] = 20;
-	this->val=i;
+	//this->val=i;
 }
+BigInt::BigInt(const char* s){
+	int size=0;
+	for(;s[size]!='\0';size++);
+	this->arr = new int[size+2];
+	int i=0;
+	for(;i<size;i++){
+		this->arr[i]=s[(size-1)-i]-'0';
+	}
+	this->arr[i] = 20;
+}
+
 
 BigInt BigInt::operator+(const BigInt& a){
 	
@@ -27,7 +38,7 @@ BigInt BigInt::operator+(const BigInt& a){
 	for(;a.arr[sizeA]!=20;++sizeA);
 	
 	// we instantiate a dummy value for our output, we will overwrite this later
-	BigInt newInt = 10;
+	BigInt newInt = 0;
 	// length is the size of our final array
 	int length = ((sizeA-sizeThis>0)?sizeA:sizeThis)+1;
 	// we use a ternary operator to keep the array atleast 11 digits long
@@ -176,4 +187,11 @@ ostream& operator<<(ostream &out, const BigInt& a){
 		out << a.arr[size];
 	}
 	return out;
+}
+istream& operator>>(istream &in, BigInt& a){
+	string s;
+	in >> s;
+	BigInt out = s.c_str();
+	a = out;
+	return in;
 }
