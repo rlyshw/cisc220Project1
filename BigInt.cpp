@@ -287,29 +287,33 @@ BigInt BigInt::operator/(const BigInt& a){
 	//find the size of what we're dividing by
 	int sizeA=0;
 	for(;a.arr[sizeA]!=20;++sizeA);
+/*	if (sizeThis <= 10 & sizeA <=  10){
+		for (int i = 0; i< sizeThis; i++){
+			for(;sizeThis>=0;sizeThis--){
+			 num = num+ stoi(this->arr[sizeThis]);
+			}
+			for (;sizeA>=0; sizeA --){
+				num2 = num2 + stoi(a.arr[sizeA]);
+			}
+			newInt = (int)num/(int)num2;
+		}
+	}*/
 	if (sizeThis > sizeA){
+		cout << "hi";
 		/*for (int i = 0; i < sizeThis; i++){
 			newInt = newInt + (this->arr[i]/a.val)*(10^j);
 			this->arr[i+1] = this->arr[i] + this->arr[i]%a.val;
 		}
 		*/
 		int j = 1;
-		for (int i = (sizeThis-1); i < sizeThis-sizeA; i--){
+		for (int i = 0; i < sizeThis;i++){
+			cout << "hi1";
 			// starting from least sig number in what we're dividing by go through the 
 			//size of the divedend and divide each number in the BigInt multiplied by 
 			// it's correct power of ten by the divisor. 
+			newInt = newInt + (this->arr[i] *j)/a.val;
+			j=j*10;
 		
-			if (this->arr[i]%a.val  > 0){
-				newInt = (double)0;
-			}
-			if (this->arr[i] *j <= sizeA){
-				newInt = newInt + ((this->arr[i] * j)+(this->arr[i+1]*(j*10)))/a.val;	
-				j=j*10;
-			}
-			else{
-				newInt = newInt + (this->arr[i] *j)/a.val;
-				j=j*10;
-			}
 		}
 	}
 	else{
