@@ -110,14 +110,47 @@ BigInt BigInt::operator-(const BigInt& a){
 }
 
 BigInt BigInt::operator/(const BigInt& a){
-	/*if(this->val%a.val!=0){
-		this->(double)val/a.val;
+	BigInt newInt = 10;
+	//find the size of what we're dividing
+	int sizeThis=0;
+	for(;this->arr[sizeThis]!=20;++sizeThis);
+	//find the size of what we're dividing by
+	int sizeA=0;
+	for(;a.arr[sizeA]!=20;++sizeA);
+	if (sizeThis > sizeA){
+		if (sizeThis%sizeA == 0){
+			for (int i =0; i <  sizeThis-sizeA; i++){
+				this.array[i] *i  
+			}
+		/*	BigInt final = this;
+			while (final > 0){
+				final = final- a;
+				newInt= newInt+ 1;
+			}
+		*/
+		}
+		else{
+			//double 
+		}
 	}
-	else{
-		this->val/a.val;
+	if (sizeThis < sizeA){
+		// double
 	}
-	*/
-	return this->val;
+	if (sizeThis == sizeA){
+		bool equal = true;
+		while (equal==true){
+			for (int j = 0; j< sizeThis; j++){
+				if (a.arr[j]== this->arr[j]){
+					bool = true;
+				}
+				else{
+					bool = false;
+				}
+			}
+			newInt= 1;
+		}
+	}
+	return newInt;
 }
 
 ostream& operator<<(ostream &out, const BigInt& a){
@@ -129,4 +162,5 @@ ostream& operator<<(ostream &out, const BigInt& a){
 		out << a.arr[size];
 	}
 	return out;
+}
 }
