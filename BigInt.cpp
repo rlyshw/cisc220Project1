@@ -235,10 +235,22 @@ BigInt BigInt::operator/(const BigInt& a){
 	int sizeA=0;
 	for(;a.arr[sizeA]!=20;++sizeA);
 	if (sizeThis > sizeA){
-		int j =1; 
-		for (int i = (sizeThis-sizeA); i <  sizeThis-sizeA; i++){
-			if (this->arr[i] <= sizeA){
-				newInt = newInt + ((this->arr[i] * j)+(this->arr[i+1]))/a.val;	
+		/*for (int i = 0; i < sizeThis; i++){
+			newInt = newInt + (this->arr[i]/a.val)*(10^j);
+			this->arr[i+1] = this->arr[i] + this->arr[i]%a.val;
+		}
+		*/
+		int j = 1;
+		for (int i = (sizeThis-1); i < sizeThis-sizeA; i--){
+			// starting from least sig number in what we're dividing by go through the 
+			//size of the divedend and divide each number in the BigInt multiplied by 
+			// it's correct power of ten by the divisor. 
+		
+			if (this->arr[i]%a.val  > 0){
+				newInt = (double)0;
+			}
+			if (this->arr[i] *j <= sizeA){
+				newInt = newInt + ((this->arr[i] * j)+(this->arr[i+1]*(j*10)))/a.val;	
 				j=j*10;
 			}
 			else{
@@ -264,6 +276,17 @@ BigInt BigInt::operator/(const BigInt& a){
 	}
 	if (sizeThis < sizeA){
 		newInt = (double)0;
+		int j =1; 
+		for (int i = (sizeThis-1); i < sizeThis-sizeA; i--){
+			if (i == (sizeThis-1)){					
+				newInt = newInt + (double)this->arr[i]/(double)a.val;
+				j=j*10;
+			}	
+			else{
+				newInt = newInt + (this->arr[i] *j)/a.val;
+				j=j*10;
+			}
+		}
 		
 	}
 	if (sizeThis == sizeA){
