@@ -2,8 +2,6 @@
 #include<sstream>
 #include<math.h>
 #include"BigInt.h"
-#include<bitset>
-#include<typeinfo>
 using namespace std;
 
 BigInt::BigInt(int i){
@@ -17,19 +15,30 @@ BigInt::BigInt(int i){
 		iterator++;
 	}
 	arr[iterator] = 20;
-	this->val=i;
+	//this->val=i;
 }
+BigInt::BigInt(const char* s){
+	int size=0;
+	for(;s[size]!='\0';size++);
+	this->arr = new int[size+2];
+	int i=0;
+	for(;i<size;i++){
+		this->arr[i]=s[(size-1)-i]-'0';
+	}
+	this->arr[i] = 20;
+}
+
 
 BigInt BigInt::operator+(const BigInt& a){
 	
 	// these two loops get the size of each operand array(ie num of digits)
-	int sizeThis=0;
+	int sizeThis=0;//sidenote: these are of type int, we are limited to nums with 2bil digits
 	for(;this->arr[sizeThis]!=20;++sizeThis);
 	int sizeA=0;
 	for(;a.arr[sizeA]!=20;++sizeA);
 	
 	// we instantiate a dummy value for our output, we will overwrite this later
-	BigInt newInt = 10;
+	BigInt newInt = 0;
 	// length is the size of our final array
 	int length = ((sizeA-sizeThis>0)?sizeA:sizeThis)+1;
 	// we use a ternary operator to keep the array atleast 11 digits long
@@ -76,6 +85,56 @@ BigInt BigInt::operator+(const BigInt& a){
 }
 
 BigInt BigInt::operator*(const BigInt& a){
+
+	BigInt out = 0;
+	int size = 0;
+	for(;a.arr[size]!=20;++size);
+	for(int i=0;i<size;i++){
+		for(int j=0;j<(a.arr[i]*pow(10,i));j++){
+			out = out+*this;
+		}
+	}
+	return out;
+	/*int sizeThis=0;//sidenote: these are of type int, we are limited to nums with 2bil digits
+	for(;this->arr[sizeThis]!=20;++sizeThis);
+	int sizeA=0;
+	for(;a.arr[sizeA]!=20;++sizeA);
+	
+	// we instantiate a dummy value for our output, we will overwrite this later
+	BigInt newInt = 10;
+	// length is the size of our final array
+	int length = ((sizeA-sizeThis>0)?sizeA:sizeThis)+1;
+	// we use a ternary operator to keep the array atleast 11 digits long
+	newInt.arr = new int[((length<10)?11:length+1)];*/
+	
+	// int sizeThis = 0;
+	// for(;this->num[sizeThis]!= 20; sizeThis++);
+	
+	
+	// BigInt out = 0;
+	// int size = 0;
+	// for(;a.arr[size]!=20;++size);
+	// int i = 0;
+	// int j = 0;
+	// if(num.sizeThis >= a.arr[size]){
+	// 	for(; i<= a.arr[size]; i++){
+	// 		for(;j <= num.sizeThis; j++){
+	// 			sum = a[i]*num[i];
+	// 			sum[] = new BigInt[sum];
+	// 				b[][] = new BigInt(sum);
+	// 		}
+		
+			
+	// 	}
+	
+	//for(int i=0;i<size;i++){
+	//	for(int j=0;j<(a.arr[i]*pow(10,i));j++){
+	//		out = out+*this;	
+	//}
+	
+	//	}
+	//}
+	//return out;
 	/*
 	//Needs some unit testing and unsure of the syntax. In this code, how should the 
 	//operand that isn't the big int parameter be represented?
@@ -101,7 +160,6 @@ BigInt BigInt::operator*(const BigInt& a){
 			addToVal = true;
 		}
 	}*/
-	return this->val*a.val;
 }
 
 BigInt BigInt::operator-(const BigInt& a){
@@ -163,4 +221,10 @@ ostream& operator<<(ostream &out, const BigInt& a){
 	}
 	return out;
 }
+istream& operator>>(istream &in, BigInt& a){
+	string s;
+	in >> s;
+	BigInt out = s.c_str();
+	a = out;
+	return in;
 }
