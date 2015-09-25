@@ -168,7 +168,7 @@ BigInt BigInt::operator-(const BigInt& a){
 }
 
 BigInt BigInt::operator/(const BigInt& a){
-	BigInt newInt = 10;
+	BigInt newInt = 0;
 	//find the size of what we're dividing
 	int sizeThis=0;
 	for(;this->arr[sizeThis]!=20;++sizeThis);
@@ -176,33 +176,46 @@ BigInt BigInt::operator/(const BigInt& a){
 	int sizeA=0;
 	for(;a.arr[sizeA]!=20;++sizeA);
 	if (sizeThis > sizeA){
-		if (sizeThis%sizeA == 0){
-			for (int i =0; i <  sizeThis-sizeA; i++){
-				this.array[i] *i  
+		int j =1; 
+		for (int i = (sizeThis-sizeA); i <  sizeThis-sizeA; i++){
+			if (this->arr[i] <= sizeA){
+				newInt = newInt + ((this->arr[i] * j)+(this->arr[i+1]))/a.val;	
+				j=j*10;
 			}
-		/*	BigInt final = this;
-			while (final > 0){
-				final = final- a;
-				newInt= newInt+ 1;
+			else{
+				newInt = newInt + (this->arr[i] *j)/a.val;
+				j=j*10;
 			}
-		*/
-		}
-		else{
-			//double 
 		}
 	}
+	else{
+		newInt = (double)0;
+		int j =1; 
+		for (int i = (sizeThis-1); i < sizeThis-sizeA; i--){
+			if (i == (sizeThis-1)){					
+				newInt = newInt + (double)this->arr[i]/(double)a.val;
+				j=j*10;
+			}	
+			else{
+				newInt = newInt + (this->arr[i] *j)/a.val;
+				j=j*10;
+			}
+		}
+		
+	}
 	if (sizeThis < sizeA){
-		// double
+		newInt = (double)0;
+		
 	}
 	if (sizeThis == sizeA){
 		bool equal = true;
 		while (equal==true){
 			for (int j = 0; j< sizeThis; j++){
 				if (a.arr[j]== this->arr[j]){
-					bool = true;
+					equal = true;
 				}
 				else{
-					bool = false;
+					equal = false;
 				}
 			}
 			newInt= 1;
