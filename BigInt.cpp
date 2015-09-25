@@ -280,7 +280,7 @@ BigInt BigInt::operator-(const BigInt& a){
 }
 
 BigInt BigInt::operator/(const BigInt& a){
-	BigInt newInt = 10;
+	BigInt newInt = 0;
 	//find the size of what we're dividing
 	int sizeThis=0;
 	for(;this->arr[sizeThis]!=20;++sizeThis);
@@ -288,23 +288,65 @@ BigInt BigInt::operator/(const BigInt& a){
 	int sizeA=0;
 	for(;a.arr[sizeA]!=20;++sizeA);
 	if (sizeThis > sizeA){
+<<<<<<< HEAD
+		/*for (int i = 0; i < sizeThis; i++){
+			newInt = newInt + (this->arr[i]/a.val)*(10^j);
+			this->arr[i+1] = this->arr[i] + this->arr[i]%a.val;
+		}
+		*/
+		int j = 1;
+		for (int i = (sizeThis-1); i < sizeThis-sizeA; i--){
+			// starting from least sig number in what we're dividing by go through the 
+			//size of the divedend and divide each number in the BigInt multiplied by 
+			// it's correct power of ten by the divisor. 
+		
+			if (this->arr[i]%a.val  > 0){
+				newInt = (double)0;
+=======
 		if (sizeThis%sizeA == 0){
 			for (int i =0; i <  sizeThis-sizeA; i++){
 				this->arr[i] *i;
+>>>>>>> 85db851b50bc68a72e3fd9ddb222b93ea530e911
 			}
-		/*	BigInt final = this;
-			while (final > 0){
-				final = final- a;
-				newInt= newInt+ 1;
+			if (this->arr[i] *j <= sizeA){
+				newInt = newInt + ((this->arr[i] * j)+(this->arr[i+1]*(j*10)))/a.val;	
+				j=j*10;
 			}
-		*/
-		}
-		else{
-			//double 
+			else{
+				newInt = newInt + (this->arr[i] *j)/a.val;
+				j=j*10;
+			}
 		}
 	}
+	else{
+		newInt = (double)0;
+		int j =1; 
+		for (int i = (sizeThis-1); i < sizeThis-sizeA; i--){
+			if (i == (sizeThis-1)){					
+				newInt = newInt + (double)this->arr[i]/(double)a.val;
+				j=j*10;
+			}	
+			else{
+				newInt = newInt + (this->arr[i] *j)/a.val;
+				j=j*10;
+			}
+		}
+		
+	}
 	if (sizeThis < sizeA){
-		// double
+		newInt = (double)0;
+		int j =1; 
+		for (int i = (sizeThis-1); i < sizeThis-sizeA; i--){
+			if (i == (sizeThis-1)){					
+				newInt = newInt + (double)this->arr[i]/(double)a.val;
+				j=j*10;
+			}	
+			else{
+				newInt = newInt + (this->arr[i] *j)/a.val;
+				j=j*10;
+			}
+		}
+		
 	}
 	if (sizeThis == sizeA){
 		bool equal = true;
