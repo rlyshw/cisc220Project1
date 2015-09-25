@@ -163,8 +163,67 @@ BigInt BigInt::operator*(const BigInt& a){
 }
 
 BigInt BigInt::operator-(const BigInt& a){
-	
-	return this->val-a.val;
+    // these two loops get the size of each operand array(ie num of digits)
+    int sizeThis=0;//sidenote: these are of type int, we are limited to nums with 2bil digits
+    for(;this->arr[sizeThis]!=20;++sizeThis);
+    int sizeA=0;
+    for(;a.arr[sizeA]!=20;++sizeA);
+    
+    // we instantiate a dummy value for our output, we will overwrite this later
+    BigInt newInt = 10;
+    // length is the size of our final array
+    int length = 0;
+    if(sizeThis > sizeA){
+        length = sizeThis;
+    }
+    else{
+        length = sizeA;
+    }
+    
+    /*
+     //NOT WORKING YET
+     //if the left opperand has less digits than the right, adds zeros so both have the same amount
+     //of digits so there is no invalid array access or early access into the 20 of one of the arrays.
+     if(sizeA < sizeThis){
+     int x = sizeThis;
+     for(; a.arr[x] != 20; x++){
+     this->arr[x] = 0;
+     }
+     this->arr[x + 1] = 20;
+     }
+     */
+    
+    
+    //Populates dummy array to be used for operation with values from left operand
+    for(;sizeThis>=0;sizeThis--){
+        newInt.arr[sizeThis] = this->arr[sizeThis];
+    }
+    
+    // we need the iterator after the loop exits
+    int i= 0;
+    // this for loop is going to do digit-by-digit arithemetic with carry
+    for(;i < length;i++){
+        int sum = ((newInt.arr[i]>=20?newInt.arr[i]%20:newInt.arr[i])-(a.arr[i]>=20?a.arr[i]%20:a.arr[i]));
+        
+        //Stops a negative integer from entering the new array and borrows 10 from the next most significant digit.
+        if(sum < 0 && newInt.arr[i+1] != 20){
+            newInt.arr[i+1] = newInt.arr[i+1] - 1;
+            sum += 10;
+            newInt.arr[i] = sum;
+        };
+        
+        newInt.arr[i] = sum;
+    }
+    
+    //Loops through the array to find the index of 20 (the terminate value) and then gets rid of all leading zeros
+    //after it. Makes the last leading zero the new 20.
+    int j = 0;
+    for(; newInt.arr[j] != 20; j++);
+    j -= 1;
+    for(; newInt.arr[j] == 0 && newInt.arr[j-1] == 0; j--);
+    newInt.arr[j] = 20;
+    
+    return newInt;
 }
 
 BigInt BigInt::operator/(const BigInt& a){
