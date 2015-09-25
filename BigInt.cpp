@@ -288,7 +288,6 @@ BigInt BigInt::operator/(const BigInt& a){
 	int sizeA=0;
 	for(;a.arr[sizeA]!=20;++sizeA);
 	if (sizeThis > sizeA){
-<<<<<<< HEAD
 		/*for (int i = 0; i < sizeThis; i++){
 			newInt = newInt + (this->arr[i]/a.val)*(10^j);
 			this->arr[i+1] = this->arr[i] + this->arr[i]%a.val;
@@ -302,11 +301,6 @@ BigInt BigInt::operator/(const BigInt& a){
 		
 			if (this->arr[i]%a.val  > 0){
 				newInt = (double)0;
-=======
-		if (sizeThis%sizeA == 0){
-			for (int i =0; i <  sizeThis-sizeA; i++){
-				this->arr[i] *i;
->>>>>>> 85db851b50bc68a72e3fd9ddb222b93ea530e911
 			}
 			if (this->arr[i] *j <= sizeA){
 				newInt = newInt + ((this->arr[i] * j)+(this->arr[i+1]*(j*10)))/a.val;	
