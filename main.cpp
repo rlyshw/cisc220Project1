@@ -1,12 +1,17 @@
 #include<iostream>
-#include<string>
 #include"BigInt.h"
+#include <time.h>
+#include <string>
 using namespace std;
 
 
 int main(){
     BigInt A = 0;
     BigInt B = 0;
+    
+    clock_t begin;
+	clock_t end;
+	begin = clock();
     
     cout << "Enter a number for A: " << endl;
     cin >> A;
@@ -17,7 +22,8 @@ int main(){
     cout << "A - B = " << A - B << endl;
     cout << "A * B = " << A * B << endl;
     cout << "A/B = " << A/B << endl;
-    
+    end = clock();
+	cout << "Runtime to complete all operations: " << (double)(end - begin)/ CLOCKS_PER_SEC << " seconds"<< endl; 
     /*
     //Unit Testing code for each overloaded arithmetic operator
     BigInt a = 100;
@@ -88,6 +94,3 @@ int main(){
     */
     
 }
-
-
-
