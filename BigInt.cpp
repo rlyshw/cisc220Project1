@@ -113,7 +113,7 @@ BigInt BigInt::operator*(const BigInt& a){
 	int sizeA = 0;
 	for(;a.arr[sizeA]!=20;++sizeA);
 	for(;this->arr[sizeThis]!=20;++sizeThis);
-	
+
 	int smaller = (sizeThis-sizeA)<0?sizeThis:sizeA;
 	int bigger  = (sizeA-sizeThis)<0?sizeThis:sizeA;
 
@@ -125,12 +125,14 @@ BigInt BigInt::operator*(const BigInt& a){
 	}
 	BigInt sum = power.str().c_str();
 	sum.arr[smaller+bigger]=0;
-	for(int i=0;i<smaller;i++){
+	int i=0;
+	int j=0;
+	for(;i<smaller;i++){
 		BigInt temp = power.str().c_str();
 		int tempSize = 0;
 		for(;temp.arr[tempSize]!=20;tempSize++);
 		temp.arr[tempSize-1]=0;
-		int j =0;
+		j=0;
 		for(;j<bigger;j++){
 			int prod;
 			prod = (sizeA<sizeThis)?(a.arr[i]*this->arr[j]):(this->arr[i]*a.arr[j]);
@@ -139,11 +141,11 @@ BigInt BigInt::operator*(const BigInt& a){
 			}
 			temp.arr[j+i] += prod%10;
 		}
-		if(!temp.arr[i+j])temp.arr[i]=20;
-		else temp.arr[i+j]=20;
 		sum = sum+temp;
 		delete[] temp.arr;
 	}
+	if(sum.arr[i+j-1])sum.arr[i+j]=20;
+	else sum.arr[i+j-1]=20;
 	return sum;
 
 	/*int sizeThis=0;//sidenote: these are of type int, we are limited to nums with 2bil digits
@@ -324,7 +326,7 @@ BigInt BigInt::operator/(const BigInt& a){
 ostream& operator<<(ostream &out, const BigInt& a){
 	int size=0;
 	for(;a.arr[size]!=20;++size);
-	/*if(size>6){
+	if(size>6){
 		size--;
 		int magnitude = size;
 		out << a.arr[size] << ".";
@@ -334,7 +336,7 @@ ostream& operator<<(ostream &out, const BigInt& a){
 		}
 		out << "e" << magnitude;
 		return out;
-	}*/
+	}
 	size--;
 	for(;size>=0;size--){
 		out << a.arr[size];
