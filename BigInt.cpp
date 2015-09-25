@@ -1,8 +1,13 @@
 #include<iostream>
+#include<stdlib.h>
 #include<sstream>
 #include<math.h>
 #include"BigInt.h"
 using namespace std;
+
+BigInt::BigInt(){
+	this->arr = new int[1];
+}
 
 BigInt::BigInt(int i){
 	//Creates a 10*1 array that stores each individual digit of the input integer
@@ -36,23 +41,26 @@ BigInt BigInt::operator+(const BigInt& a){
 	for(;this->arr[sizeThis]!=20;++sizeThis);
 	int sizeA=0;
 	for(;a.arr[sizeA]!=20;++sizeA);
-	
 	// we instantiate a dummy value for our output, we will overwrite this later
 	BigInt newInt = 0;
 	// length is the size of our final array
 	int length = ((sizeA-sizeThis>0)?sizeA:sizeThis)+1;
 	// we use a ternary operator to keep the array atleast 11 digits long
+	delete[] newInt.arr;
 	newInt.arr = new int[((length<10)?11:length+1)];
-	
+	int i=0;
+	for(;i<((length<10)?11:length+1);i++){
+		newInt.arr[i]=0;
+	}
+	newInt.arr[i]=20;
 	// we need the iterator after the loop exits
-	int i= 0;
+	i= 0;
 	// this for loop is going to do digit-by-digit arithemetic with carry
 	for(;i<length;i++){
 		// this sum line looks like a lot, lets break it down
 		// it's really just a.arr[i]+this->arr[i], the ternary operator
 		// just makes sure we aren't trying to add in the array terminator(20)
 		int sum = ((a.arr[i]>=20?a.arr[i]%20:a.arr[i])+(this->arr[i]>=20?this->arr[i]%20:this->arr[i]));
-		
 		if(sum>=10){
 			// carry out
 			newInt.arr[i+1]++;
@@ -60,7 +68,6 @@ BigInt BigInt::operator+(const BigInt& a){
 		
 		// no matter if we carried or not, make this value the first digit of the sum
 		newInt.arr[i] += sum%10;
-		
 		// this stops a 10 from entering our digit array
 		// if we are at a ten,
 		if(newInt.arr[i]>=10){
@@ -70,7 +77,6 @@ BigInt BigInt::operator+(const BigInt& a){
 			newInt.arr[i] = newInt.arr[i]%10;
 		}
 	}
-	
 	// this conditional takes care of leading zeros
 	// we can get leading zeros if the most significant digit didn't carry out
 	if(!newInt.arr[i-1]){
@@ -85,16 +91,61 @@ BigInt BigInt::operator+(const BigInt& a){
 }
 
 BigInt BigInt::operator*(const BigInt& a){
-
+	/* this is the broken addition loopy way
 	BigInt out = 0;
 	int size = 0;
 	for(;a.arr[size]!=20;++size);
 	for(int i=0;i<size;i++){
-		for(int j=0;j<(a.arr[i]*pow(10,i));j++){
+		ostringstream power;
+		power << a.arr[i];
+		for(int s=0;s<i;s++){
+			power << '0';
+		}
+		int p = atoi(power.str().c_str());
+		for(int j=0;j<p;j++){
 			out = out+*this;
 		}
 	}
-	return out;
+	return out;*/
+	// THIS IS THE MOST RECENT ALMOST-WORKING DIGIT-WISE
+	BigInt out = 0;
+	int sizeThis = 0;
+	int sizeA = 0;
+	for(;a.arr[sizeA]!=20;++sizeA);
+	for(;this->arr[sizeThis]!=20;++sizeThis);
+	
+	int smaller = (sizeThis-sizeA)<0?sizeThis:sizeA;
+	int bigger  = (sizeA-sizeThis)<0?sizeThis:sizeA;
+
+	ostringstream power;
+	power << '1';
+	int s=0;
+	for(;s<smaller+bigger;s++){
+		power << '0';
+	}
+	BigInt sum = power.str().c_str();
+	sum.arr[smaller+bigger]=0;
+	for(int i=0;i<smaller;i++){
+		BigInt temp = power.str().c_str();
+		int tempSize = 0;
+		for(;temp.arr[tempSize]!=20;tempSize++);
+		temp.arr[tempSize-1]=0;
+		int j =0;
+		for(;j<bigger;j++){
+			int prod;
+			prod = (sizeA<sizeThis)?(a.arr[i]*this->arr[j]):(this->arr[i]*a.arr[j]);
+			if(prod>=10){
+				temp.arr[j+i+1] = prod/10;
+			}
+			temp.arr[j+i] += prod%10;
+		}
+		if(!temp.arr[i+j])temp.arr[i]=20;
+		else temp.arr[i+j]=20;
+		sum = sum+temp;
+		delete[] temp.arr;
+	}
+	return sum;
+
 	/*int sizeThis=0;//sidenote: these are of type int, we are limited to nums with 2bil digits
 	for(;this->arr[sizeThis]!=20;++sizeThis);
 	int sizeA=0;
@@ -237,7 +288,7 @@ BigInt BigInt::operator/(const BigInt& a){
 	if (sizeThis > sizeA){
 		if (sizeThis%sizeA == 0){
 			for (int i =0; i <  sizeThis-sizeA; i++){
-				this.array[i] *i  
+				this->arr[i] *i;
 			}
 		/*	BigInt final = this;
 			while (final > 0){
@@ -258,10 +309,10 @@ BigInt BigInt::operator/(const BigInt& a){
 		while (equal==true){
 			for (int j = 0; j< sizeThis; j++){
 				if (a.arr[j]== this->arr[j]){
-					bool = true;
+					equal = true;
 				}
 				else{
-					bool = false;
+					equal = false;
 				}
 			}
 			newInt= 1;
@@ -272,8 +323,18 @@ BigInt BigInt::operator/(const BigInt& a){
 
 ostream& operator<<(ostream &out, const BigInt& a){
 	int size=0;
-	for(;a.arr[size]!=20;++size){
-	};
+	for(;a.arr[size]!=20;++size);
+	/*if(size>6){
+		size--;
+		int magnitude = size;
+		out << a.arr[size] << ".";
+		size--;
+		for(;size>=magnitude-5;size--){
+			out << a.arr[size];
+		}
+		out << "e" << magnitude;
+		return out;
+	}*/
 	size--;
 	for(;size>=0;size--){
 		out << a.arr[size];

@@ -5,6 +5,7 @@ class BigInt {
 public:
 	int val;
 	int* arr;
+	BigInt();
 	BigInt(int);
 	BigInt(const char*);
 	BigInt operator+(const BigInt&);
